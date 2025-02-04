@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Attendance System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="loadingScreen" class="loading-screen">
+    <div class="spinner"></div>
+    <p>Just a second...</p>
+</div>
+   <nav class="navbar">
+    <h1>Smart Attendance System</h1>
+    <div class="theme-toggle">
+        <input type="checkbox" id="theme-toggle-switch">
+        <label for="theme-toggle-switch" class="theme-toggle-label">
+            <span class="theme-toggle-icon">🌞</span>
+            <span class="theme-toggle-icon">🌚</span>
+        </label>
+    </div>
+</nav>
+
+    <div class="container">
+        <div class="dashboard">
+            <!-- Registration Section -->
+            <div class="card">
+                <div class="card-header">
+                       <h2><i class="fas fa-user-plus"></i> Student Registration</h2>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="studentName" class="form-control" placeholder="Enter student name">
+                </div>
+                <div class="form-group">
+                    <button onclick="startRegistration()" class="btn btn-primary">
+                        <i class="fas fa-camera"></i> Open Camera
+                    </button>
+                </div>
+                <div class="video-container">
+                    <video id="registrationVideo" class="video-feed" autoplay></video>
+                </div>
+                <div class="form-group">
+                    <button onclick="captureRegistration()" class="btn btn-success" hidden>
+                        Capture & Register
+                    </button>
+                </div>
+                <div id="registrationAlert"></div>
+            </div>
+
+            <!-- Attendance Section -->
+            <div class="card">
+                <div class="card-header">
+                <h2><i class="fas fa-chalkboard-teacher"></i> Class Attendance</h2>
+                </div>
+                <div class="form-group" style="flex-direction: row; gap: 0.75rem; flex-wrap: wrap;">
+                    <button onclick="startClass()" class="btn btn-primary">
+                        <i class="fas fa-play-circle"></i> Start
+                    </button>
+                    <br><br>
+                    <button onclick="endClass()" class="btn btn-danger">
+                       <i class="fas fa-stop-circle"></i> End &nbsp;
+                    </button>
+                </div>
+
+                <div class="video-container">
+                    <video id="attendanceVideo" class="video-feed" autoplay></video>
+                </div>
+                <div id="attendanceAlert"></div>
+            </div>
+        </div>
+
+     <div class="card-header">
+    <h2><i class="fas fa-clipboard-list"></i> Attendance Records</h2>
+</div>
+<div class="date-picker">
+    <input type="text" id="attendanceDate" class="form-control flatpickr-input" placeholder="Select Date" readonly>
+    <button onclick="downloadAttendancePDF()" class="btn btn-primary">
+    <i class="fas fa-file-pdf"></i> Download PDF
+</button>
+
+    <div id="loadingSpinner" class="loading-spinner"></div>
+</div>
+<div id="attendanceRecords" class="attendance-records"></div>
+
+<!-- Attendance Percentage Section Inside Attendance Records -->
+<div class="percentage-section">
+    <h3><i class="fas fa-chart-line"></i> Attendance Percentage</h3>
+    <div class="date-picker">
+        <input type="text" id="startDate" class="form-control flatpickr-input" placeholder="Start Date" readonly>
+        <input type="text" id="endDate" class="form-control flatpickr-input" placeholder="End Date" readonly>
+        <button id="fetchPercentage" class="btn btn-primary">Get %</button>
+    </div>
+    <div id="attendancePercentageRecords" class="attendance-records"></div>
+</div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
